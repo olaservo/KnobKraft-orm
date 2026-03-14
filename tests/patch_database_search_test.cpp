@@ -343,6 +343,8 @@ TEST_CASE("patch database searches across lists with second synth present") {
 		filter.orderBy = midikraft::PatchOrdering::Order_by_Place_in_List;
 		filter.listID = duplicateUserList->id();
 		filter.onlyFaves = true;
+		filter.showRegular = false;
+		filter.showUndecided = false;
 		auto result = db.getPatches(filter, 0, -1);
 		expectNames(result, { "Fav-1", "Fav-1", "Fav-2", "Fav-1" });
 	}

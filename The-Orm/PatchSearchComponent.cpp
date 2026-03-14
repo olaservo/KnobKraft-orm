@@ -166,7 +166,16 @@ PatchSearchComponent::PatchSearchComponent(PatchView* patchView, PatchButtonPane
 	// Clear all filters button
 	clearFilters_.setButtonText("Clear filters");
 	clearFilters_.onClick = [this]() {
-		unclickAllButtons();
+		// Reset to default filter (shows all non-hidden patches with visibility buttons reflecting actual state)
+		std::vector<std::shared_ptr<midikraft::Synth>> synthList;
+		for (auto& device : UIModel::instance()->synthList_.activeSynths()) {
+			if (auto synth = std::dynamic_pointer_cast<midikraft::Synth>(device)) {
+				synthList.push_back(synth);
+			}
+		}
+		auto defaultFilter = midikraft::PatchFilter(synthList);
+		defaultFilter.orderBy = static_cast<midikraft::PatchOrdering>(orderByType_.getSelectedId());
+		loadFilter(defaultFilter);
 		updateCurrentFilter();
 		patchView_->retrieveFirstPageFromDatabase();
 		clearFilters_.setEnabled(false);
@@ -210,6 +219,11 @@ void PatchSearchComponent::unclickAllButtons() {
 	// Make sure to keep the sort order
 	auto defaultFilter = midikraft::PatchFilter(synthList);
 	defaultFilter.orderBy = static_cast<midikraft::PatchOrdering>(orderByType_.getSelectedId());
+	// Explicitly clear visibility flags so right-click solo-select works correctly
+	defaultFilter.onlyFaves = false;
+	defaultFilter.showHidden = false;
+	defaultFilter.showRegular = false;
+	defaultFilter.showUndecided = false;
 	loadFilter(defaultFilter);
 }
 
