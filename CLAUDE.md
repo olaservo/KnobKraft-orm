@@ -7,6 +7,14 @@ KnobKraft ORM is a cross-platform MIDI Sysex Librarian for managing synthesizer 
 **License:** Dual licensed (AGPL / MIT available for purchase)
 **Original author:** christofmuc
 **Our fork:** https://github.com/olaservo/KnobKraft-orm
+**Issues:** https://github.com/olaservo/KnobKraft-orm/issues
+
+## Working with This Repo
+
+- **PRs and branches go to our fork only** (olaservo), never to the upstream christofmuc repos.
+- The MidiKraft submodule also uses our fork: https://github.com/olaservo/MidiKraft
+- Issues are tracked at https://github.com/olaservo/KnobKraft-orm/issues
+- We may pull updates from upstream, but our changes stay in our forks.
 
 ## Repository Structure
 
